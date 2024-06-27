@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIRAMISU</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap');
+        body {
+            font-family: 'League Spartan', sans-serif;
+            background-color: #F3F3F3;
+            color: #002C58;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: url('8.png') no-repeat center center;
+            background-size: cover;
+            padding: 2rem;
+            text-align: center;
+            color: #FDFDFD;
+            font-size: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative; /* Untuk efek parallax */
+            overflow: hidden; /* Untuk efek parallax */
+        }
+        header::after {
+            content: '';
+            background: rgba(0, 0, 0, 0.4); /* Efek overlay */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Mengatur di bawah konten */
+        }
+        header h1 {
+            margin-bottom: 0.5rem; /* Spasi sedikit antara judul dan deskripsi */
+        }
+        header p {
+            margin: 0; /* Hapus margin default */
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            margin: 0 1rem;
+        }
+        nav ul li a {
+            color: #FDFDFD;
+            text-decoration: none;
+            font-weight: bold;
+            position: relative;
+            transition: color 0.3s ease-in-out;
+        }
+        nav ul li a::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #FDFDFD;
+            bottom: -2px;
+            left: 0;
+            transform: scaleX(0); /* Efek garis bawah */
+            transition: transform 0.3s ease-in-out;
+        }
+        nav ul li a:hover::before {
+            transform: scaleX(1);
+        }
+        .container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .bio, .commission, .portfolio, .contact {
+            margin-bottom: 2rem;
+        }
+        .portfolio {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-gap: 1rem;
+        }
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+        }
+        .portfolio-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+            cursor: pointer; /* Tambahkan pointer cursor */
+        }
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+        .portfolio-item::after {
+            content: '';
+            background: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .portfolio-item:hover::after {
+            opacity: 1;
+        }
+        .portfolio-item h3 {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            color: #FDFDFD;
+            transition: color 0.3s ease-in-out;
+        }
+        .commission-item {
+            background-color: #EAEAEA;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 1rem;
+            padding: 1rem;
+            text-align: center;
+            flex-basis: calc(50% - 2rem);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out; /* Animasi hover */
+        }
+        .commission-item img {
+            max-width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .commission-item:hover {
+            transform: translateY(-10px); /* Efek hover */
+        }
+        .commission-item:hover img {
+            transform: scale(1.1); /* Skala besar saat hover */
+        }
+        .commission-item h3 {
+            margin-top: 1rem;
+        }
+        .commission-item p {
+            margin: 0.5rem 0;
+        }
+        .commission-item button {
+            display: block;
+            margin: 1rem auto;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #0043F1;
+            color: #FDFDFD;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase; /* Huruf kapital semua */
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .commission-item button:hover {
+            background-color: #002C58;
+        }
+        .bio-text {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .software-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        .software-icons img {
+            width: 50px;
+            height: 50px;
+            margin: 0 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .software-icons img:hover {
+            transform: scale(1.2); /* Memperbesar ikon saat hover */
+        }
+        .contact {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .contact a {
+            display: inline-block;
+            margin: 0.5rem;
+            text-decoration: none;
+            color: #0043F1;
+            font-size: 1.5rem;
+            transition: color 0.3s ease-in-out;
+        }
+        .contact a:hover {
+            color: #002C58;
+        }
+        .footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #0043F1;
+            color: #FDFDFD;
+            margin-top: 2rem;
+        }
+        .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0043F1;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TIRAMISU</h1>
+        <p>2D & 3D Artist</p>
+        <nav>
+            <ul>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#commission">Commission</a></li>
+                <li><a href="#bio">About Me</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="portfolio" id="portfolio">
+            <h2>Portfolio</h2>
+            <div class="portfolio-item">
+                <a href="1.jpg" data-lightbox="portfolio" data-title="Artwork 1">
+                    <img src="1.jpg" alt="Artwork 1">
+                </a>
+                <h3>Artwork 1</h3>
+            </div>
+            <div class="portfolio-item">
+                <a href="5.jpg" data-lightbox="portfolio" data-title="Artwork 2">
+                    <img src="5.jpg" alt="Artwork 2">
+                </a>
+                <h3>Artwork 2</h3>
+            </div>
+            <div class="portfolio-item">
+                <a href="3.png" data-lightbox="portfolio" data-title="Artwork 3">
+                    <img src="3.png" alt="Artwork 3">
+                </a>
+                <h3>Artwork 3</h3>
+            </div>
+            <div class="portfolio-item">
+                <a href="6.png" data-lightbox="portfolio" data-title="Artwork 4">
+                    <img src="6.png" alt="Artwork 4">
+                </a>
+                <h3>Artwork 4</h3>
+            </div>
+            <div class="portfolio-item">
+                <a href="2s.jpg" data-lightbox="portfolio" data-title="Artwork 5">
+                    <img src="2s.jpg" alt="Artwork 5">
+                </a>
+                <h3>Artwork 5</h3>
+            </div>
+            <div class="portfolio-item">
+                <a href="7.jpg" data-lightbox="portfolio" data-title="Artwork 6">
+                    <img src="7.jpg" alt="Artwork 6">
+                </a>
+                <h3>Artwork 6</h3>
+            </div>
+        </div>
+        <div class="commission" id="commission">
+            <h2>Commission</h2>
+            <div class="commission-item">
+                <h3>Illustration</h3>
+                <div class="price">$20 - BUST UP</div>
+                <div class="price">$30 - HALF BODY</div>
+                <div class="price">$40 - FULL BODY</div>
+                <p>Additional Costs:</p>
+                <p>With/include background: +$30</p>
+                <p>Detail/sensitive content: Contact for pricing</p>
+                <button onclick="window.location.href='commission.html'">ORDER NOW</button>
+            </div>
+        </div>
+        <div class="bio" id="bio">
+            <h2>About Me</h2>
+            <div class="bio-text">
+                <p>TIRAMISU, 2D & 3D Artist</p>
+                <p>I use software such as:</p>
+                <div class="software-icons">
+                    <img src="CSP.jpg" alt="Clip Studio Paint">
+                    <img src="blender.png" alt="Blender">
+                    <img src="UE5.png" alt="Unreal Engine 5">
+                    <img src="AE.jpg" alt="After Effects">
+                </div>
+            </div>
+            <div class="contact">
+                <h3>Contact Me</h3>
+                <a href="mailto:paymentmisu@gmail.com">Gmail</a>
+                <a href="https://discord.com/users/tiramisu_69">Discord</a>
+                <a href="https://www.instagram.com/t_tiramisu0_0">Instagram</a>
+                <a href="https://www.tiktok.com/@t_tiramisu0_0">TikTok</a>
+                <a href="https://twitter.com/Tiramiss_0">Twitter</a>
+                <a href="https://youtube.com/@disconnected66636?si=UDJecmIJq0QoNOgD">YouTube</a>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        &copy; 2024 TIRAMISU. All Rights Reserved.
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+</body>
+</html>
